@@ -1,15 +1,148 @@
 :root{
-
+  --cube-color: rgba(59, 32, 193, 0.8);
+  --green-color-floor: rgb(247, 24, 146);
+  --bone-color-floor: rgb(62, 186, 45);
+  --rotate-speed: 30s;
+  --bounce-speed-two: 3s;
 }
 
 body{
     background-color: black;
     min-height: 100vh;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 75px;
+    perspective: 8em;
+    perspective-origin: 50% calc(50% - 2em);
 }
 
 .scene{
     position: relative;
+    transform-style: preserve-3d;
+    animation: rotate-scene var(--rotate-speed) infinite linear; 
+}
+
+@keyframes rotate-scene {
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+.cubes{
+    position: absolute;
+    height: 2em; width: 2em;
+    transform-style: preserve-3d;
+}
+
+.cube-one{
+    /* background-color: var(--cube-color); */
+    left: -1em;
+    bottom: -1.5em;
+   
+}
+
+.cube-one :is(.left, .right, .front, .back, .top, .bottom){
+    background-color: var(--cube-color);
+    position: absolute;
+    height: 2em; width: 2em;
+    box-shadow: inset 0em 0em 0.5em 0.1em rgba(0,0,0,0.3);
+}
+
+.front{
+    transform: translateZ(1em);
+}
+
+/*rotate and then translate in the direction its facing*/
+
+.left{
+    transform: rotateY(270deg) translateZ(1em);
+}
+
+.right{
+    transform: rotateY(90deg) translateZ(1em);
+}
+
+.back{
+    transform: rotateY(180deg) translateZ(1em);
+}
+
+.top{
+    transform: translateY(-50%) rotateX(90deg);
+}
+
+.bottom{
+    transform: translateY(50%) rotateX(90deg);
+    bottom: 0;
+    box-shadow: 0em 0em 3em  rgba(0,0,0,0.3);
+}
+
+.cube-two{
+    /* to change to cube color var */
+    /* background-color: rgba(138, 43, 226, 0.6); */
+    left: -1em;
+    bottom: 1.5em;
+    animation: cube-two-bounce var(--bounce-speed-two) infinite ease-out
+    
+}
+
+@keyframes cube-two-bounce {
+    0%, 100%{
+        bottom: 0.5em;
+    }
+    50%{
+        bottom: 2em;
+        animation-timing-function: ease-in;
+    }
+}
+
+.cube-two :is(.left, .right, .front, .back, .top, .bottom){
+    background-color: rgba(138, 43, 226, 0.6);
+    position: absolute;
+    height: 2em; width: 2em;
+    box-shadow: inset 0em 0em 0.5em 0.1em rgba(0,0,0,0.3);
+}
+
+.shadow{
+    position: absolute;
+    
+}
+
+.cube-two-shadow{
+    height: 40%; width: 40%;
+    margin: 0.5em 1.5em 1em 0.6em;  
+    background: rgba(0,0,0,0.7);
+    box-shadow: 0 0 0.3em 0.3em rgba(0,0,0,0.7);
+    animation: shadow-enlarge var(--bounce-speed-two) infinite ease-out
+}
+
+@keyframes shadow-enlarge {
+    50%{
+        transform: scale(1.3);
+        animation-timing-function: ease-in; 
+    }
+}
+
+.cube-one-shadow{
+    
+}
+
+
+.floor{
+    height: 8em; width: 8em;
+    border-radius: 40%;
+    background-image: 
+        repeating-conic-gradient(
+        /*fade from green to bone to green at these angles and repeat*/
+        var(--green-color-floor) 0%,  var(--bone-color-floor) 15%,  var(--green-color-floor) 33%
+    );
+    position: absolute;
+    top: -2.5em;
+    left: -4em;
+    transform: rotateX(90deg);
+    background-size: cover;
+    /* horizontal placement, vertical placement, how strong the shadow is, how concentrated it is (smaller = wider), colour */
+    box-shadow: inset 0em 0em 0.7em 2em rgba(0,0,0,0.6);
+    
 }
