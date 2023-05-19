@@ -1,9 +1,10 @@
 :root{
-  --cube-color: rgba(59, 32, 193, 0.8);
+  --cube-one-color: rgba(59, 32, 193, 1);
+  --cube-two-color: rgba(138, 43, 226, 1);
   --green-color-floor: rgb(247, 24, 146);
   --bone-color-floor: rgb(62, 186, 45);
   --rotate-speed: 30s;
-  --bounce-speed-two: 3s;
+  --bounce-speed-two: 4s;
 }
 
 body{
@@ -37,16 +38,25 @@ body{
 }
 
 .cube-one{
-    /* background-color: var(--cube-color); */
     left: -1em;
     bottom: -1.5em;
-   
+    animation: cube-one-bounce var(--bounce-speed-two) infinite linear
 }
 
+
+ @keyframes cube-one-bounce {
+    0%, 100%{
+        height: 1.5em;
+    }
+    6%, 95%{
+        height: 2em;
+    }
+}  
+
 .cube-one :is(.left, .right, .front, .back, .top, .bottom){
-    background-color: var(--cube-color);
+    background-color: var(--cube-one-color);
     position: absolute;
-    height: 2em; width: 2em;
+    height: 100%; width: 100%;
     box-shadow: inset 0em 0em 0.5em 0.1em rgba(0,0,0,0.3);
 }
 
@@ -73,43 +83,54 @@ body{
 }
 
 .bottom{
+    height: 2em; width: 2em;
     transform: translateY(50%) rotateX(90deg);
-    bottom: 0;
     box-shadow: 0em 0em 3em  rgba(0,0,0,0.3);
 }
 
+
 .cube-two{
-    /* to change to cube color var */
-    /* background-color: rgba(138, 43, 226, 0.6); */
     left: -1em;
     bottom: 1.5em;
     animation: cube-two-bounce var(--bounce-speed-two) infinite ease-out
-    
 }
 
 @keyframes cube-two-bounce {
     0%, 100%{
-        bottom: 0.5em;
+        bottom: 0em;
+        height: 1.8em;
+    }
+    6%, 95%{
+        height: 2em;
     }
     50%{
-        bottom: 2em;
+        bottom: 3em;
         animation-timing-function: ease-in;
     }
 }
 
+
+
 .cube-two :is(.left, .right, .front, .back, .top, .bottom){
-    background-color: rgba(138, 43, 226, 0.6);
+    background-color: var(--cube-two-color);
     position: absolute;
-    height: 2em; width: 2em;
+    height: 100%; width: 100%;
     box-shadow: inset 0em 0em 0.5em 0.1em rgba(0,0,0,0.3);
 }
 
-.shadow{
-    position: absolute;
-    
+.cube-two > .bottom{
+    animation: bottom-bounce var(--bounce-speed-two) infinite ease-out
 }
 
+@keyframes bottom-bounce {
+    0%, 100%{
+        bottom: 0em;
+    }
+}
+
+
 .cube-two-shadow{
+    position: absolute;
     height: 40%; width: 40%;
     margin: 0.5em 1.5em 1em 0.6em;  
     background: rgba(0,0,0,0.7);
@@ -118,24 +139,24 @@ body{
 }
 
 @keyframes shadow-enlarge {
+    0%, 100%{
+        transform: scale(0.2);
+    }
+    
     50%{
         transform: scale(1.3);
+        opacity: 0.5;
         animation-timing-function: ease-in; 
     }
-}
-
-.cube-one-shadow{
     
 }
-
 
 .floor{
     height: 8em; width: 8em;
     border-radius: 40%;
     background-image: 
         repeating-conic-gradient(
-        /*fade from green to bone to green at these angles and repeat*/
-        var(--green-color-floor) 0%,  var(--bone-color-floor) 15%,  var(--green-color-floor) 33%
+        var(--cube-one-color) 0%,  rgb(255,255,255) 15%,  var(--cube-one-color) 33%
     );
     position: absolute;
     top: -2.5em;
