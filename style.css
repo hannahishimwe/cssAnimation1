@@ -1,8 +1,6 @@
 :root{
   --cube-one-color: rgba(59, 32, 193, 1);
   --cube-two-color: rgba(138, 43, 226, 1);
-  --green-color-floor: rgb(247, 24, 146);
-  --bone-color-floor: rgb(62, 186, 45);
   --rotate-speed: 30s;
   --bounce-speed-two: 4s;
 }
